@@ -405,5 +405,4 @@ def from_coreml(model):
             coreml_op_to_nnvm(layerop, list(l.input), l.output[0], symtab)
     returns = [symtab.get_var(i.name, must_contain=False) for i in spec.description.output]
     tvmparams = {k:tvm.nd.array(np.array(v, dtype=np.float32)) for k, v in symtab.params.items()}
-    # for now return first output
-    return returns[0], tvmparams
+    return _sym.Group(returns), tvmparams
